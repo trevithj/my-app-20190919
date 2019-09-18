@@ -8,12 +8,23 @@ const Div = styled.div`
   font-size: calc(6px + 2vmin);
 `;
 
+const getHandleClick = (props, contact) => () => {
+  console.log('handling...');
+  props.selectContact(contact);
+  props.setView('card');
+};
+
 const Contacts = props => {
   const { contacts } = props;
   return (
     <Div className='contacts'>
       {contacts.map(c => (
-        <Contact key={c.id} name={c.name} job={c.jobTitle} />
+        <Contact
+          key={c.id}
+          name={c.name}
+          job={c.jobTitle}
+          onClick={getHandleClick(props, c)}
+        />
       ))}
     </Div>
   );
@@ -28,7 +39,12 @@ const setView = view => ({
   payload: view
 });
 
+const selectContact = contact => ({
+  type: 'SELECT_CONTACT',
+  payload: contact
+});
+
 export default connect(
   mapStateToProps,
-  { setView }
+  { setView, selectContact }
 )(Contacts);

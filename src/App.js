@@ -2,11 +2,12 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import './App.css';
 import Contacts from './list/contacts';
-import { getContactsTest } from './api';
+import Card from './card';
+import { getContacts } from './api';
 
 const App = props => {
   useEffect(() => {
-    getContactsTest().then(contacts => {
+    getContacts().then(contacts => {
       props.setContacts(contacts);
       console.log('useEffect 12');
     });
@@ -18,7 +19,10 @@ const App = props => {
       <header className='App-header'>
         <p className='App-title'>The Contacts List App</p>
       </header>
-      <Contacts />
+      {props.view === 'list' && <Contacts />}
+      {props.view === 'card' && (
+        <Card {...props.contact} onClick={props.setViewToList} />
+      )}
     </div>
   );
 };
@@ -27,8 +31,14 @@ const setContacts = payload => ({
   type: 'SET_CONTACTS',
   payload
 });
+const setViewToList = () => ({
+  type: 'SET_VIEW',
+  payload: 'list'
+});
 
 export default connect(
-  null,
-  { setContacts }
+  state => {
+    return { view: state.view, contact: state.selected };
+  },
+  { setContacts, setViewToList }
 )(App);
