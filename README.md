@@ -26,6 +26,10 @@ The contacts data is pulled in from a mocked back-end using Mockaroo.
 Each call will return 64 records of randomly-generated data as a JSON array of objects.
 The call should only take place on App initialisation, so to refresh data, refresh the page.
 
+The initial display should show a list of contacts. Clicking on a list item will display a detailed card for that contact. Clicking on the card will take you back to the list display.
+
+The ugly `By Letter` top button in the contacts list view will display a count of how many contacts' given names begin with a given letter. Clicking on this view takes you back to the list display.
+
 ## Not done
 
 ### Search functionality.
@@ -37,4 +41,4 @@ So a search functionality would really be a filtering of the existing `contacts`
 ### Map and Search summary
 
 This due to a lack of time.
-Also, the mock data created some very strange addresses, so it was unclear how valid these results were likely to be.
+Also, the mock data created some very strange addresses, so it was unclear how valid these results were likely to be for displaying on a map.
