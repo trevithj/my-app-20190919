@@ -1,28 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import './App.css';
 import Contacts from './list/contacts';
+import { getContactsTest } from './api';
 
-function App() {
+const App = props => {
+  useEffect(() => {
+    getContactsTest().then(contacts => {
+      props.setContacts(contacts);
+      console.log('useEffect 12');
+    });
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <div className='App'>
       <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Learn React
-        </a>
+        <p className='App-title'>The Contacts List App</p>
       </header>
       <Contacts />
     </div>
   );
-}
+};
 
-export default App;
+const setContacts = payload => ({
+  type: 'SET_CONTACTS',
+  payload
+});
+
+export default connect(
+  null,
+  { setContacts }
+)(App);

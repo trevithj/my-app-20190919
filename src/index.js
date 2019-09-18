@@ -7,22 +7,17 @@ import App from './App';
 
 const initialState = {
   view: 'main',
-  contacts: [
-    {
-      id: 64,
-      name: { given: 'Christy', family: 'Jenik' },
-      email: 'cjenik1r@spiegel.de',
-      phone: '987-408-6755',
-      url: 'http://nhs.uk',
-      jobTitle: 'Quality Engineer',
-      address: { street: '560 Amoth Terrace', city: 'København' },
-      skills: ['Outdoor Education', 'WML', 'CPE', 'Routers']
-    }
-  ]
+  contacts: []
 };
 
-const reducer = (state, newState) => {
-  return { ...state, ...newState };
+const reducer = (state, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case 'SET_CONTACTS':
+      return { ...state, contacts: payload };
+    default:
+      return state;
+  }
 };
 
 const store = createStore(reducer, initialState);

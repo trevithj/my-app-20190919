@@ -1,29 +1,34 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
+import Contact from './contact';
+
+const Div = styled.div`
+  font-family: Arial, sans-serif;
+  font-size: calc(6px + 2vmin);
+`;
 
 const Contacts = props => {
-  const { contacts } = props.state;
+  const { contacts } = props;
   return (
-    <div className='contacts'>
+    <Div className='contacts'>
       {contacts.map(c => (
         <Contact key={c.id} name={c.name} job={c.jobTitle} />
       ))}
-    </div>
-  );
-};
-
-const Contact = props => {
-  const name = `${props.name.given} ${props.name.family}`;
-  return (
-    <div className='contact'>
-      <h3>{name}</h3>
-      <p>{props.job}</p>
-    </div>
+    </Div>
   );
 };
 
 const mapStateToProps = state => {
-  return { state };
+  return { contacts: state.contacts };
 };
 
-export default connect(mapStateToProps)(Contacts);
+const setView = view => ({
+  type: 'SET_VIEW',
+  payload: view
+});
+
+export default connect(
+  mapStateToProps,
+  { setView }
+)(Contacts);
