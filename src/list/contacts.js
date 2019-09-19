@@ -18,6 +18,7 @@ const Contacts = props => {
   const { contacts } = props;
   return (
     <Div className='contacts'>
+      <button onClick={() => props.setView('byLetter')}>By Letter</button>
       {contacts.map(c => (
         <Contact
           key={c.id}

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import './App.css';
 import Contacts from './list/contacts';
+import ByLetter from './list/byLetter';
 import Card from './card';
 import { getContacts } from './api';
 
@@ -20,8 +21,9 @@ const App = props => {
         <p className='App-title'>The Contacts List App</p>
       </header>
       {props.view === 'list' && <Contacts />}
+      {props.view === 'byLetter' && <ByLetter />}
       {props.view === 'card' && (
-        <Card {...props.contact} onClick={props.setViewToList} />
+        <Card {...props.contact} onClick={() => props.setView('list')} />
       )}
     </div>
   );
@@ -31,14 +33,14 @@ const setContacts = payload => ({
   type: 'SET_CONTACTS',
   payload
 });
-const setViewToList = () => ({
+const setView = view => ({
   type: 'SET_VIEW',
-  payload: 'list'
+  payload: view
 });
 
 export default connect(
   state => {
     return { view: state.view, contact: state.selected };
   },
-  { setContacts, setViewToList }
+  { setContacts, setView }
 )(App);
